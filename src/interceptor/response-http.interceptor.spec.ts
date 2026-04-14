@@ -1,21 +1,6 @@
 import { CallHandler, ExecutionContext } from '@nestjs/common';
-import { Expose } from 'class-transformer';
 import { of, lastValueFrom } from 'rxjs';
 import { ResponseInterceptor } from './response-http.interceptor';
-
-class UserDto {
-  @Expose()
-  id!: number;
-
-  @Expose()
-  name!: string;
-
-  @Expose()
-  email!: string;
-
-  @Expose()
-  role!: string;
-}
 
 describe('ResponseInterceptor', () => {
   const context = {} as ExecutionContext;
@@ -36,8 +21,8 @@ describe('ResponseInterceptor', () => {
     });
   });
 
-  it('serializes nested payloads when a dto is provided', async () => {
-    const interceptor = new ResponseInterceptor(UserDto);
+  it('preserves wrapped success responses', async () => {
+    const interceptor = new ResponseInterceptor();
     const next: CallHandler = {
       handle: () =>
         of({
@@ -64,6 +49,7 @@ describe('ResponseInterceptor', () => {
         name: 'Ada',
         email: 'ada@example.com',
         role: 'user',
+        password: 'secret',
       },
       errors: null,
     });

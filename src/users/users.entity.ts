@@ -1,4 +1,4 @@
-import { Comment } from 'src/comments/comments.entity';
+import { Comment } from '../comments/comments.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
